@@ -29,5 +29,10 @@
     "express-handlebars": "^3.0.0",
     "method-override": "^2.3.8",
     "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.2.0"
   }
 }
