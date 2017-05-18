@@ -1,10 +1,12 @@
 const connection = require('./connection');
 
-module.export = function selectAll(callback) {
+module.export = function selectAll(table, callback) {
+  // table : string
+
   // Connect to the database
   connection.connect();
   // Perform query against all items in burgers table
-  connection.query('SELECT * FROM burgers', (err, rows) => {
+  connection.query('SELECT * FROM ?', table, (err, rows) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
@@ -14,25 +16,33 @@ module.export = function selectAll(callback) {
   });
 };
 
-module.export = function insertOne(name, callback) {
+module.export = function insertOne(table, column, value, callback) {
+  // table : string
+  // column : string
+  // value : string
+
   // Connect to the database
   connection.connect();
-  // Insert new row into burgers table
-  connection.query('INSERT INTO burgers (burger_name) VALUES (?)', name, (err, row) => {
+  // Insert a new row into a table
+  connection.query('INSERT INTO ? (?) VALUES (?)', [table, column, value], (err, row) => {
     // When a response is received disconnect from the database
     connection.end();
-    // If the response is an return throw it
+    // If the response is an return return it
     if (err) return callback(err);
     // on valid data return it
     return callback(row);
   });
 };
 
-module.export = function updateOne(id, callback) {
+module.export = function updateOne(table, column, where, callback) {
+  // table : string
+  // column : string
+  // where : object
+
   // Connect to the database
   connection.connect();
   // Update the burger to devoured based on the id
-  connection.query('UPDATE burgers SET devoured=1 WHERE id=?', id, (err, row) => {
+  connection.query('UPDATE ? SET ? WHERE ?', [table, column, where], (err, row) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
