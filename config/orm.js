@@ -2,49 +2,62 @@ const dbConfig = process.env.CLEARDB_DATABASE_URL || require('./connection');
 const mysql = require('mysql');
 
 function Orm() {
-  this.connection = mysql.createConnection(dbConfig);
+  this.pool = mysql.createPool(dbConfig);
 }
 
-Orm.prototype.connect = function() {
-  this.connection.connect(err => {
-    if (err) throw err;
-  });
-};
+// Orm.prototype.connect = function() {
+//   this.pool.getConnection((err, connection) => {
+//     if (err) throw err;
 
-Orm.prototype.end = function() {
-  this.connection.end();
-};
+//   });
+// };
 
-Orm.prototype.selectAll = function(table, callback){
-  this.connection.query('SELECT * FROM ??', table, (err, rows) => {
-    // destroy the connection on response
+// Orm.prototype.end = function() {
+//   this.connection.end();
+// };
+
+Orm.prototype.selectAll = function(table, callback) {
+  this.pool.getConnection((err, connection) => {
     if (err) throw err;
-    // If the response is an error return it
-    // if (process.env.node_env === 'development') if (err) throw err;
-    // on valid data return it
-    return callback(rows);
+    connection.query('SELECT * FROM ??', table, (err, rows) => {
+      // release the connection on response
+      connection.release();
+      if (err) throw err;
+      // If the response is an error return it
+      // if (process.env.node_env === 'development') if (err) throw err;
+      // on valid data return it
+      return callback(rows);
+    });
   });
 };
 
 Orm.prototype.insertOne = function(table, column, value, callback) {
-  this.connection.query('INSERT INTO ?? (??) VALUES (?)', [table, column, value], (err, row) => {
-    // destroy the connection on response
+  this.pool.getConnection((err, connection) => {
     if (err) throw err;
-    // If the response is an return return it
-    // if (process.env.node_env === 'development') if (err) throw err;
-    // on valid data return it
-    return callback(row);
+    connection.query('INSERT INTO ?? (??) VALUES (?)', [table, column, value], (err, row) => {
+      // release the connection on response
+      connection.release();
+      if (err) throw err;
+      // If the response is an return return it
+      // if (process.env.node_env === 'development') if (err) throw err;
+      // on valid data return it
+      return callback(row);
+    });
   });
 };
 
 Orm.prototype.updateOne = function(table, column, where, callback) {
-  this.connection.query('UPDATE ?? SET ? WHERE ?', [table, column, where], (err, row) => {
-    // destroy the connection on response
+  this.pool.getConnection((err, connection) => {
     if (err) throw err;
-    // If the response is an error return it
-    // if (process.env.node_env === 'development') if (err) throw err;
-    // on valid data return it
-    return callback(row);
+    connection.query('UPDATE ?? SET ? WHERE ?', [table, column, where], (err, row) => {
+      // release the connection on response
+      connection.release();
+      if (err) throw err;
+      // If the response is an error return it
+      // if (process.env.node_env === 'development') if (err) throw err;
+      // on valid data return it
+      return callback(row);
+    });
   });
 };
 
