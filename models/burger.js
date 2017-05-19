@@ -1,8 +1,10 @@
 const Orm = require('../config/orm.js');
 
+const dbQuery = new Orm();
+
 exports.all = (callback) => {
   // callback : function
-  const dbQuery = new Orm();
+
   dbQuery.selectAll('burgers', (result) => {
     return callback(result);
   });
@@ -11,7 +13,7 @@ exports.all = (callback) => {
 exports.add = (name, callback) => {
   // name : string
   // callback : function
-  const dbQuery = new Orm();
+
   dbQuery.insertOne('burgers', 'burger_name', name, (result) => {
     return callback(result);
   });
@@ -20,7 +22,7 @@ exports.add = (name, callback) => {
 exports.devour = (burgerId, callback) => {
   // burgerId : integer
   // callback : function
-  const dbQuery = new Orm();
+
   dbQuery.updateOne('burgers', {
     devoured: 1,
   }, {
