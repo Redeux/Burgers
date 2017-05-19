@@ -1,26 +1,31 @@
-const connection = require('./connection');
+const dbConfig = require('./connection');
+const mysql = require('mysql');
 
-module.export = function selectAll(table, callback) {
+exports.selectAll = (table, callback) => {
   // table : string
 
+  // Create a new connection to the database
+  const connection = mysql.createConnection(dbConfig);
   // Connect to the database
   connection.connect();
   // Perform query against all items in burgers table
-  connection.query('SELECT * FROM ?', table, (err, rows) => {
+  connection.query('SELECT * FROM ??', table, (err, rows) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
-    if (err) return callback(err);
+    if (err) throw err;
     // on valid data return it
     return callback(rows);
   });
 };
 
-module.export = function insertOne(table, column, value, callback) {
+exports.insertOne = (table, column, value, callback) => {
   // table : string
   // column : string
   // value : string
 
+  // Create a new connection to the database
+  const connection = mysql.createConnection(dbConfig);
   // Connect to the database
   connection.connect();
   // Insert a new row into a table
@@ -28,17 +33,19 @@ module.export = function insertOne(table, column, value, callback) {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an return return it
-    if (err) return callback(err);
+    if (err) throw err;
     // on valid data return it
     return callback(row);
   });
 };
 
-module.export = function updateOne(table, column, where, callback) {
+exports.updateOne = (table, column, where, callback) => {
   // table : string
   // column : string
   // where : object
 
+  // Create a new connection to the database
+  const connection = mysql.createConnection(dbConfig);
   // Connect to the database
   connection.connect();
   // Update the burger to devoured based on the id
@@ -46,7 +53,7 @@ module.export = function updateOne(table, column, where, callback) {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
-    if (err) return callback(err);
+    if (err) throw err;
     // on valid data return it
     return callback(row);
   });
