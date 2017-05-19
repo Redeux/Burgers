@@ -6,7 +6,7 @@ exports.selectAll = (table, callback) => {
   // table : string
 
   // Create a new connection pool for the database
-  const connection = mysql.createConnect(dbConfig);
+  const connection = mysql.createConnection(dbConfig);
   // Connect to the database
   connection.connect();
 
