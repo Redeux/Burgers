@@ -6,20 +6,20 @@ exports.selectAll = (table, callback) => {
   // table : string
 
   // Create a new connection pool for the database
-  const pool = mysql.createPool(dbConfig);
+  const connection = mysql.createConnect(dbConfig);
   // Connect to the database
-  pool.getConnection((err, connection) => {
+  connection.connect();
+
+  connection.query('SELECT * FROM ??', table, (err, rows) => {
+    // destroy the connection on response
+    connection.destroy();
     if (err) throw err;
-    connection.query('SELECT * FROM ??', table, (err, rows) => {
-      // destroy the connection on response
-      connection.destroy();
-      if (err) throw err;
-      // If the response is an error return it
-      // if (process.env.node_env === 'development') if (err) throw err;
-      // on valid data return it
-      return callback(rows);
-    });
+    // If the response is an error return it
+    // if (process.env.node_env === 'development') if (err) throw err;
+    // on valid data return it
+    return callback(rows);
   });
+  connection.end();
 };
 
 // Insert one new row into a table
