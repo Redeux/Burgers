@@ -17,7 +17,7 @@ module.exports = (app) => {
   });
 
   app.delete('/:id', (req, res) => {
-    burger.devour(req.params.id, response => res.redirect('/'));
+    burger.devour(parseInt(req.params.id, 10), response => res.redirect('/'));
   });
 
   app.use((req, res) => {
