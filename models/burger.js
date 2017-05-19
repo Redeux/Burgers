@@ -1,28 +1,37 @@
-const orm = require('../config/orm.js');
+const Orm = require('../config/orm.js');
 
 exports.all = (callback) => {
   // callback : function
-  orm.selectAll('burgers', (result) => {
-    callback(result);
+  const dbQuery = new Orm();
+  dbQuery.connect();
+  dbQuery.selectAll('burgers', (result) => {
+    dbQuery.end();
+    return callback(result);
   });
 };
 
 exports.add = (name, callback) => {
   // name : string
   // callback : function
-  orm.insertOne('burgers', 'burger_name', name, (result) => {
-    callback(result);
+  const dbQuery = new Orm();
+  dbQuery.connect();
+  dbQuery.insertOne('burgers', 'burger_name', name, (result) => {
+    dbQuery.end();
+    return callback(result);
   });
 };
 
 exports.devour = (burgerId, callback) => {
   // burgerId : integer
   // callback : function
-  orm.updateOne('burgers', {
+  const dbQuery = new Orm();
+  dbQuery.connect();
+  dbQuery.updateOne('burgers', {
     devoured: 1,
   }, {
     id: burgerId,
   }, (result) => {
-    callback(result);
+    dbQuery.end();
+    return callback(result);
   });
 };
