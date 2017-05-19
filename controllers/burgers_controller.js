@@ -3,14 +3,13 @@ const burger = require('../models/burger');
 module.exports = (app) => {
   app.get('/', (req, res) => {
     burger.all((rows) => {
-      if (rows) {
-        const burgers = {
-          uneaten: [],
-          eaten: [],
-        };
-        rows.map(obj => obj.devoured ? burgers.eaten.push(obj) : burgers.uneaten.push(obj));
-        res.render('index', burgers);
-      }
+      if (!rows) res.redirect('/');
+      const burgers = {
+        uneaten: [],
+        eaten: [],
+      };
+      rows.map(obj => obj.devoured ? burgers.eaten.push(obj) : burgers.uneaten.push(obj));
+      res.render('index', burgers);
     });
   });
 
