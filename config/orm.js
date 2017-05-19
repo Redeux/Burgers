@@ -12,7 +12,6 @@ exports.selectAll = (table, callback) => {
 
   connection.query('SELECT * FROM ??', table, (err, rows) => {
     // destroy the connection on response
-    connection.destroy();
     if (err) throw err;
     // If the response is an error return it
     // if (process.env.node_env === 'development') if (err) throw err;
