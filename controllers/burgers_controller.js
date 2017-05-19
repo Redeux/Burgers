@@ -7,7 +7,6 @@ module.exports = (app) => {
         uneaten: [],
         eaten: [],
       };
-      console.log(rows);
       rows.map(obj => obj.devoured ? burgers.eaten.push(obj) : burgers.uneaten.push(obj));
       res.render('index', burgers);
     });
