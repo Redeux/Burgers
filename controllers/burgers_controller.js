@@ -3,7 +3,6 @@ const burger = require('../models/burger');
 module.exports = (app) => {
   app.get('/', (req, res) => {
     burger.all((rows) => {
-      if (!rows) return res.redirect('/');
       const burgers = {
         uneaten: [],
         eaten: [],
