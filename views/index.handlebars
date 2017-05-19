@@ -7,6 +7,7 @@
   </div>
   <div class="row">
     <div class="col-md-4">
+      <p class="text-center"><strong>Click to Eat</strong></p>
       <div class="list-group">
         {{#each uneaten}}
         <form action="/{{this.id}}?_method=DELETE" method="POST">
@@ -14,9 +15,9 @@
         </form>
         {{/each}}
       </div>
-      <p class="text-center">Click to Eat</p>
     </div>
     <div class="col-md-4">
+      <p class="text-center"><strong>Make a new burger</strong></p>
       <form method="POST" action="/">
         <div class="form-group text-center">
           <textarea class="form-control" rows="3" name="burger"></textarea>
@@ -25,11 +26,11 @@
       </form>
     </div>
     <div class="col-md-4">
+      <p class="text-center"><strong>Eaten</strong></p>
       <div class="list-group">
         {{#each eaten}}
         <a href="#" class="list-group-item disabled">{{this.burger_name}}</a> {{/each}}
       </div>
-      <p class="text-center">Eaten</p>
     </div>
   </div>
 </div>
