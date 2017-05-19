@@ -29,7 +29,7 @@ exports.insertOne = (table, column, value, callback) => {
   // Connect to the database
   connection.connect();
   // Insert a new row into a table
-  connection.query('INSERT INTO ? (?) VALUES (?)', [table, column, value], (err, row) => {
+  connection.query('INSERT INTO ?? (??) VALUES (?)', [table, column, value], (err, row) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an return return it
@@ -41,7 +41,7 @@ exports.insertOne = (table, column, value, callback) => {
 
 exports.updateOne = (table, column, where, callback) => {
   // table : string
-  // column : string
+  // column : object
   // where : object
 
   // Create a new connection to the database
@@ -49,7 +49,7 @@ exports.updateOne = (table, column, where, callback) => {
   // Connect to the database
   connection.connect();
   // Update the burger to devoured based on the id
-  connection.query('UPDATE ? SET ? WHERE ?', [table, column, where], (err, row) => {
+  connection.query('UPDATE ?? SET ? WHERE ?', [table, column, where], (err, row) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
