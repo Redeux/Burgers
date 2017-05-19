@@ -1,13 +1,13 @@
 const orm = require('../config/orm.js');
 
-module.export = function all(callback) {
+exports.all = (callback) => {
   // callback : function
   orm.selectAll('burgers', (result) => {
     callback(result);
   });
 };
 
-module.export = function add(name, callback) {
+exports.add = (name, callback) => {
   // name : string
   // callback : function
   orm.insertOne('burgers', 'burger_name', name, (result) => {
@@ -15,7 +15,7 @@ module.export = function add(name, callback) {
   });
 };
 
-module.export = function devour(burgerId, callback) {
+exports.devour = (burgerId, callback) => {
   // burgerId : integer
   // callback : function
   orm.updateOne('burgers', 'devoured', {
