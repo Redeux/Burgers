@@ -11,8 +11,8 @@ exports.selectAll = (table, callback) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query('SELECT * FROM ??', table, (err, rows) => {
-      // Release the connection on response
-      connection.release();
+      // destroy the connection on response
+      connection.destroy();
       if (err) throw err;
       // If the response is an error return it
       // if (process.env.node_env === 'development') if (err) throw err;
@@ -35,8 +35,8 @@ exports.insertOne = (table, column, value, callback) => {
     if (err) throw err;
     // Insert a new row into a table
     connection.query('INSERT INTO ?? (??) VALUES (?)', [table, column, value], (err, row) => {
-      // Release the connection on response
-      connection.release();
+      // destroy the connection on response
+      connection.destroy();
       if (err) throw err;
       // If the response is an return return it
       // if (process.env.node_env === 'development') if (err) throw err;
@@ -59,8 +59,8 @@ exports.updateOne = (table, column, where, callback) => {
     if (err) throw err;
     // Update the burger to devoured based on the id
     connection.query('UPDATE ?? SET ? WHERE ?', [table, column, where], (err, row) => {
-      // Release the connection on response
-      connection.release();
+      // destroy the connection on response
+      connection.destroy();
       if (err) throw err;
       // If the response is an error return it
       // if (process.env.node_env === 'development') if (err) throw err;
