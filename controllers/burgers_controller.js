@@ -13,7 +13,7 @@ module.exports = (app) => {
   });
 
   app.post('/', (req, res) => {
-    burger.add(req.body.name, response => res.redirect('/'));
+    burger.add(req.body.burger, response => res.redirect('/'));
   });
 
   app.delete('/:id', (req, res) => {
