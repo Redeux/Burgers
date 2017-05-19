@@ -10,8 +10,6 @@ module.exports = (app) => {
         };
         rows.map(obj => obj.devoured ? burgers.eaten.push(obj) : burgers.uneaten.push(obj));
         res.render('index', burgers);
-      } else {
-        res.redirect('/');
       }
     });
   });
