@@ -18,7 +18,9 @@ exports.add = (name, callback) => {
 exports.devour = (burgerId, callback) => {
   // burgerId : integer
   // callback : function
-  orm.updateOne('burgers', 'devoured', {
+  orm.updateOne('burgers', {
+    devoured: 1
+  }, {
     id: burgerId,
   }, (result) => {
     callback(result);
