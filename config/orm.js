@@ -1,4 +1,4 @@
-const dbConfig = require('./connection');
+const dbConfig = process.env.CLEARDB_DATABASE_URL || require('./connection');
 const mysql = require('mysql');
 
 exports.selectAll = (table, callback) => {
@@ -13,7 +13,7 @@ exports.selectAll = (table, callback) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
-    if (err) throw err;
+    if (process.env.node_env === 'development') if (err) throw err;
     // on valid data return it
     return callback(rows);
   });
@@ -33,7 +33,7 @@ exports.insertOne = (table, column, value, callback) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an return return it
-    if (err) throw err;
+    if (process.env.node_env === 'development') if (err) throw err;
     // on valid data return it
     return callback(row);
   });
@@ -53,7 +53,7 @@ exports.updateOne = (table, column, where, callback) => {
     // When a response is received disconnect from the database
     connection.end();
     // If the response is an error return it
-    if (err) throw err;
+    if (process.env.node_env === 'development') if (err) throw err;
     // on valid data return it
     return callback(row);
   });
