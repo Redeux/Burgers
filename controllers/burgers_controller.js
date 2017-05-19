@@ -1,38 +1,26 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
 const burger = require('../models/burger');
 
-const app = express();
-
-// Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-  extended: false,
-}));
-// Override with POST having ?_method=DELETE
-app.use(methodOverride('_method'));
-// register the .handlebars extension with express and set the main layout page
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main',
-}));
-// Use handlebars to render the website
-app.set('view engine', 'handlebars');
-
-app.route('/')
-  .get((req, res) => {
-    burger.all(rows => {
-
+module.exports = (app) => {
+  app.get('/', (req, res) => {
+    burger.all((rows) => {
+      const burgers = {
+        uneaten: [],
+        eaten: [],
+      };
+      rows.map(obj => obj.devoured ? burgers.eaten.push(obj) : burgers.uneaten.push(obj));
+      res.render('index', burgers);
     });
-  })
-  .post((req, res) => {
-
-  })
-  .delete((req, res) => {
-
   });
 
-app.use((req, res) => {
-  res.redirect('/');
-});
+  app.post('/', (req, res) => {
+    burger.add(req.body.name, response => res.redirect('/'));
+  });
 
-module.exports = app;
+  app.delete('/:id', (req, res) => {
+    burger.devour(req.params.id, response => res.redirect('/'));
+  });
+
+  app.use((req, res) => {
+    res.redirect('/');
+  });
+};
