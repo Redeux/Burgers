@@ -19,6 +19,7 @@ exports.selectAll = (table, callback) => {
         return callback(rows);
       });
     }
+    return callback(false);
   });
 };
 
@@ -43,6 +44,7 @@ exports.insertOne = (table, column, value, callback) => {
         return callback(row);
       });
     }
+    return callback(false);
   });
 };
 
@@ -67,5 +69,6 @@ exports.updateOne = (table, column, where, callback) => {
         return callback(row);
       });
     }
+    return callback(false);
   });
 };
